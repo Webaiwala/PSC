@@ -1,746 +1,499 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PSP — Pitch Se Prediction</title><meta name="description"
-content="PSP — Pitch Se Prediction. Premium cricket analysis, match insights and exclusive updates.">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-rel="stylesheet"><style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-:root{
---bg:#030506;
---white:#fff;
---cyan:#00e5ff;
---blue:#008cff;
---green:#00ffa6;
-}
-
-html,body{
-width:100%;
-min-height:100%;
-}
-
-body{
-font-family:Inter,sans-serif;
-background:#030506;
-color:#fff;
-overflow-x:hidden;
-}
-
-/* BACKGROUND */
-
-body:before{
-content:"";
-position:fixed;
-inset:0;
-background:
-radial-gradient(circle at 50% -10%,rgba(0,229,255,.18),transparent 36%),
-radial-gradient(circle at 100% 100%,rgba(90,45,255,.16),transparent 30%),
-radial-gradient(circle at 0% 70%,rgba(0,150,255,.09),transparent 28%);
-pointer-events:none;
-z-index:-3;
-}
-
-.grid{
-position:fixed;
-inset:0;
-background-image:
-linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-background-size:50px 50px;
-mask-image:linear-gradient(to bottom,black,transparent 90%);
-pointer-events:none;
-z-index:-2;
-}
-
-.orb{
-position:fixed;
-width:360px;
-height:360px;
-border-radius:50%;
-filter:blur(130px);
-opacity:.12;
-pointer-events:none;
-z-index:-1;
-}
-
-.orb.one{
-background:#00e5ff;
-top:-180px;
-left:-130px;
-}
-
-.orb.two{
-background:#653cff;
-right:-150px;
-bottom:-180px;
-}
-
-/* MAIN */
-
-.page{
-min-height:100svh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:14px;
-}
-
-.container{
-width:100%;
-max-width:900px;
-text-align:center;
-}
-
-/* STATUS */
-
-.status{
-display:inline-flex;
-align-items:center;
-gap:8px;
-
-padding:8px 14px;
-
-border:1px solid rgba(0,229,255,.25);
-background:rgba(0,229,255,.055);
-
-border-radius:100px;
-
-font-size:9px;
-font-weight:800;
-letter-spacing:1.5px;
-
-color:#b8f8ff;
-
-margin-bottom:18px;
-}
-
-.status-dot{
-width:7px;
-height:7px;
-border-radius:50%;
-background:var(--green);
-box-shadow:0 0 14px var(--green);
-animation:pulse 1.3s infinite;
-}
-
-@keyframes pulse{
-50%{
-transform:scale(1.5);
-opacity:.5;
-}
-}
-
-/* HERO */
-
-h1{
-font-size:clamp(43px,8vw,86px);
-line-height:.94;
-font-weight:900;
-letter-spacing:-4px;
-}
-
-.h1-gradient{
-background:linear-gradient(
-110deg,
-#fff 10%,
-#8ef6ff 48%,
-#fff 82%
-);
--webkit-background-clip:text;
-background-clip:text;
-color:transparent;
-}
-
-.hero-text{
-max-width:650px;
-margin:17px auto 20px;
-
-font-size:13px;
-line-height:1.65;
-
-color:#858b91;
-}
-
-.hero-text strong{
-color:#fff;
-}
-
-/* CARD */
-
-.card{
-position:relative;
-
-max-width:650px;
-margin:auto;
-
-padding:25px 20px 21px;
-
-border-radius:27px;
-
-background:
-linear-gradient(
-145deg,
-rgba(255,255,255,.075),
-rgba(255,255,255,.018)
-);
-
-border:1px solid rgba(255,255,255,.10);
-
-box-shadow:
-0 35px 100px rgba(0,0,0,.72),
-inset 0 1px rgba(255,255,255,.09);
-
-backdrop-filter:blur(25px);
-}
-
-.card:before{
-content:"";
-position:absolute;
-inset:-1px;
-
-border-radius:27px;
-
-background:
-linear-gradient(
-135deg,
-rgba(0,229,255,.45),
-transparent 25%,
-transparent 70%,
-rgba(110,60,255,.4)
-);
-
-padding:1px;
-
--webkit-mask:
-linear-gradient(#fff 0 0) content-box,
-linear-gradient(#fff 0 0);
-
--webkit-mask-composite:xor;
-mask-composite:exclude;
-
-pointer-events:none;
-}
-
-/* IMAGE LOGO */
-
-.logo{
-width:78px;
-height:78px;
-
-margin:0 auto 15px;
-
-border-radius:22px;
-
-overflow:hidden;
-
-border:1px solid rgba(255,255,255,.16);
-
-background:#0a0d0f;
-
-box-shadow:
-0 0 35px rgba(0,229,255,.15),
-inset 0 1px rgba(255,255,255,.1);
-
-position:relative;
-z-index:2;
-}
-
-.logo img{
-width:100%;
-height:100%;
-
-display:block;
-
-object-fit:cover;
-}
-
-/* TEXT */
-
-.small-title{
-font-size:9px;
-font-weight:800;
-letter-spacing:3px;
-
-color:#687077;
-
-text-transform:uppercase;
-}
-
-.main-title{
-font-size:clamp(27px,5vw,42px);
-font-weight:900;
-
-margin-top:6px;
-}
-
-.desc{
-max-width:530px;
-
-margin:10px auto 0;
-
-font-size:11px;
-line-height:1.65;
-
-color:#858b91;
-}
-
-/* STATS */
-
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-
-gap:8px;
-
-max-width:500px;
-
-margin:19px auto;
-}
-
-.stat{
-padding:11px 7px;
-
-border-radius:14px;
-
-background:rgba(255,255,255,.035);
-border:1px solid rgba(255,255,255,.065);
-}
-
-.number{
-font-size:16px;
-font-weight:800;
-}
-
-.label{
-margin-top:3px;
-
-font-size:7px;
-letter-spacing:1px;
-
-color:#62686d;
-
-text-transform:uppercase;
-}
-
-/* TIMER */
-
-.update-label{
-font-size:8px;
-letter-spacing:2px;
-
-text-transform:uppercase;
-
-color:#6b7277;
-
-margin-bottom:8px;
-}
-
-.timer{
-display:flex;
-justify-content:center;
-gap:7px;
-
-margin-bottom:17px;
-}
-
-.time-box{
-min-width:54px;
-
-padding:8px;
-
-border-radius:11px;
-
-background:rgba(0,0,0,.42);
-
-border:1px solid rgba(255,255,255,.065);
-}
-
-.time{
-display:block;
-
-font-size:18px;
-font-weight:900;
-
-color:#fff;
-}
-
-.time-label{
-display:block;
-
-font-size:7px;
-
-color:#555b60;
-
-letter-spacing:1px;
-
-margin-top:2px;
-}
-
-/* JOIN BUTTON */
-
-.join-btn{
-position:relative;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-gap:10px;
-
-width:100%;
-max-width:430px;
-
-margin:auto;
-
-padding:16px 22px;
-
-border:0;
-
-border-radius:15px;
-
-cursor:pointer;
-
-font-family:Inter,sans-serif;
-
-font-size:13px;
-font-weight:900;
-
-letter-spacing:1.2px;
-
-color:#001217;
-
-background:
-linear-gradient(
-105deg,
-#00f0ff,
-#00bfff,
-#008cff
-);
-
-box-shadow:
-0 0 25px rgba(0,216,255,.25),
-0 15px 35px rgba(0,0,0,.4);
-
-transition:.25s ease;
-
-overflow:hidden;
-}
-
-.join-btn:before{
-content:"";
-
-position:absolute;
-
-top:0;
-left:-100%;
-
-width:55%;
-height:100%;
-
-background:
-linear-gradient(
-90deg,
-transparent,
-rgba(255,255,255,.55),
-transparent
-);
-
-transform:skewX(-20deg);
-
-animation:shine 3s infinite;
-}
-
-@keyframes shine{
-
-0%{
-left:-100%;
-}
-
-45%,100%{
-left:160%;
-}
-
-}
-
-/* TELEGRAM ICON */
-
-.telegram{
-width:24px;
-height:24px;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-border-radius:50%;
-
-background:#001217;
-
-color:#00e5ff;
-
-font-size:13px;
-
-font-weight:900;
-
-z-index:1;
-
-box-shadow:0 0 12px rgba(0,229,255,.2);
-}
-
-.join-text{
-z-index:1;
-}
-
-.join-btn:hover{
-transform:translateY(-3px);
-
-box-shadow:
-0 0 40px rgba(0,229,255,.42),
-0 20px 45px rgba(0,0,0,.5);
-}
-
-.join-btn:active{
-transform:scale(.98);
-}
-
-/* MICRO TEXT */
-
-.one-tap{
-margin-top:9px;
-
-font-size:8px;
-
-color:#555b60;
-
-letter-spacing:.6px;
-}
-
-.footer{
-margin-top:15px;
-
-font-size:7px;
-
-line-height:1.5;
-
-color:#42484c;
-}
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-.page{
-padding:12px;
-}
-
-.status{
-margin-bottom:15px;
-font-size:8px;
-}
-
-h1{
-font-size:43px;
-letter-spacing:-2.8px;
-}
-
-.hero-text{
-font-size:10px;
-margin:13px auto 16px;
-}
-
-.card{
-padding:23px 15px 20px;
-border-radius:23px;
-}
-
-.card:before{
-border-radius:23px;
-}
-
-.logo{
-width:65px;
-height:65px;
-border-radius:19px;
-}
-
-.main-title{
-font-size:27px;
-}
-
-.desc{
-font-size:10px;
-}
-
-.stats{
-margin:17px auto;
-}
-
-.stat{
-padding:10px 4px;
-}
-
-.number{
-font-size:14px;
-}
-
-.label{
-font-size:6.5px;
-}
-
-.time-box{
-min-width:51px;
-}
-
-.time{
-font-size:17px;
-}
-
-.join-btn{
-padding:15px;
-font-size:12px;
-}
-
-}
-
-/* SMALL PHONES */
-
-@media(max-width:360px){
-
-h1{
-font-size:38px;
-}
-
-.card{
-padding:20px 12px;
-}
-
-.logo{
-width:60px;
-height:60px;
-}
-
-}
-</style></head><body><div class="grid"></div><div class="orb one"></div>
-<div class="orb two"></div><main class="page"><div class="container"><!-- STATUS --><div class="status">
-<span class="status-dot"></span>
-CRICKET ANALYSIS COMMUNITY
-</div><!-- HERO --><h1>
-READ THE GAME.<br><span class="h1-gradient">
-BEFORE THE GAME.
-</span></h1><p class="hero-text">Go beyond the scoreboard with
-<strong>pitch insights, match analysis</strong>
-and focused cricket updates from
-<strong>PSP — Pitch Se Prediction.</strong>
-
-</p><!-- CARD --><section class="card"><!-- YOUR IMAGE --><div class="logo"><img
-src="Screenshot_20260915-213827.jpg"
-alt="PSP Cricket"
-
-«»
-
-</div><div class="small-title">
-PSP EXCLUSIVE
-</div><div class="main-title">
-Pitch Se Prediction™
-</div><p class="desc">A dedicated cricket community built around
-match analysis, pitch reading, team updates
-and expert perspectives.
-
-</p><!-- STATS --><div class="stats"><div class="stat">
-<div class="number">43K+</div>
-<div class="label">Community</div>
-</div><div class="stat">
-<div class="number">24/7</div>
-<div class="label">Updates</div>
-</div><div class="stat">
-<div class="number">LIVE</div>
-<div class="label">Match Focus</div>
-</div></div><!-- 5 SECOND TIMER --><div class="update-label">
-REDIRECTING TO TELEGRAM
-</div><div class="timer"><div class="time-box"><span
-class="time"
-id="seconds"
-
-«»
-
-5
-</span>
-
-<span class="time-label">
-SEC
-</span></div></div><!-- JOIN BUTTON --><button
-class="join-btn"
-onclick="joinTelegram()"
-aria-label="Join PSP on Telegram"
-
-«»
-
-<span class="telegram">
-➤
-</span><span class="join-text">
-JOIN NOW
-</span></button><div class="one-tap">
-ONE TAP → TELEGRAM
-</div><p class="footer">Cricket analysis and informational content only.
-Please make decisions responsibly and follow applicable laws.
-
-</p></section></div></main><script>
-
-/* ==================================
-TELEGRAM LINK
-================================== */
-
-const TELEGRAM_LINK =
-"https://t.me/+1LiMw68B-KUyMDc1";
-
-
-/* ==================================
-INSTANT BUTTON REDIRECT
-================================== */
-
-function joinTelegram(){
-
-window.location.href = TELEGRAM_LINK;
-
-}
-
-
-/* ==================================
-5 SECOND AUTO REDIRECT
-================================== */
-
-let seconds = 5;
-
-const timer =
-document.getElementById("seconds");
-
-
-const countdown =
-setInterval(function(){
-
-seconds--;
-
-timer.textContent = seconds;
-
-
-if(seconds <= 0){
-
-clearInterval(countdown);
-
-window.location.href =
-TELEGRAM_LINK;
-
-}
-
-},1000);
-
-</script></body>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>PSP — Pitch Se Prediction™</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.12), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(0, 110, 255, 0.12), transparent 30%),
+        #05080d;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 45px 45px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 620px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: 42px 34px 30px;
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 28px;
+      background: rgba(8, 13, 20, 0.88);
+      box-shadow:
+        0 0 60px rgba(0, 174, 255, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      text-align: center;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      top: -150px;
+      left: -120px;
+      background: rgba(0, 204, 255, 0.14);
+      filter: blur(80px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      bottom: -160px;
+      right: -120px;
+      background: rgba(0, 110, 255, 0.12);
+      filter: blur(80px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .top-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #7c8795;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(34px, 8vw, 58px);
+      line-height: 0.98;
+      letter-spacing: -2px;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    h1 span {
+      color: #00d9ff;
+    }
+
+    .description {
+      max-width: 510px;
+      margin: 0 auto 28px;
+      color: #aeb8c5;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* Cricket Image */
+    .logo {
+      width: 94px;
+      height: 94px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(0, 217, 255, 0.35);
+      box-shadow:
+        0 0 28px rgba(0, 217, 255, 0.18),
+        inset 0 0 20px rgba(0, 217, 255, 0.08);
+      background: #091018;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .exclusive {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: rgba(0, 217, 255, 0.08);
+      border: 1px solid rgba(0, 217, 255, 0.2);
+      color: #00d9ff;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .brand {
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+
+    .brand span {
+      color: #00d9ff;
+    }
+
+    .community-text {
+      color: #8f9baa;
+      font-size: 14px;
+      line-height: 1.65;
+      max-width: 470px;
+      margin: 0 auto 30px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .stat {
+      padding: 17px 8px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .stat-number {
+      font-size: 21px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #697583;
+    }
+
+    .match-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      color: #697583;
+      margin-bottom: 13px;
+      text-transform: uppercase;
+    }
+
+    .timer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .time-box {
+      min-width: 78px;
+      padding: 13px 8px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .time-number {
+      font-size: 25px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 6px;
+      color: #ffffff;
+    }
+
+    .time-label {
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      color: #687584;
+      font-weight: 700;
+    }
+
+    .join-btn {
+      width: 100%;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 18px 22px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #00d9ff, #008cff);
+      color: #031018;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      box-shadow:
+        0 12px 35px rgba(0, 174, 255, 0.2),
+        inset 0 1px 0 rgba(255,255,255,0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .join-btn:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 16px 40px rgba(0, 174, 255, 0.3),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+
+    .join-btn:active {
+      transform: translateY(0);
+    }
+
+    .telegram {
+      width: 25px;
+      height: 25px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(3, 16, 24, 0.15);
+      font-size: 14px;
+    }
+
+    .one-tap {
+      margin-top: 13px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #53606e;
+    }
+
+    .footer {
+      margin-top: 24px;
+      color: #515c69;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 12px;
+      }
+
+      .card {
+        padding: 32px 20px 24px;
+        border-radius: 23px;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      .description {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .stats {
+        gap: 7px;
+      }
+
+      .stat {
+        padding: 14px 5px;
+      }
+
+      .stat-number {
+        font-size: 18px;
+      }
+
+      .timer {
+        gap: 7px;
+      }
+
+      .time-box {
+        min-width: 70px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .time-box {
+        min-width: 62px;
+      }
+
+      .time-number {
+        font-size: 22px;
+      }
+
+      .time-label {
+        font-size: 7px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="card">
+
+      <div class="top-label">
+        CRICKET ANALYSIS COMMUNITY
+      </div>
+
+      <h1>
+        READ THE GAME.<br>
+        <span>BEFORE THE GAME.</span>
+      </h1>
+
+      <p class="description">
+        Go beyond the scoreboard with <strong>pitch insights, match analysis</strong>
+        and focused cricket updates from <strong>PSP — Pitch Se Prediction.</strong>
+      </p>
+
+      <!-- ONLY IMAGE CHANGE -->
+      <div class="logo">
+        <img
+          src="Screenshot_20260915-213827.jpg"
+          alt="PSP Cricket"
+        />
+      </div>
+
+      <div class="exclusive">
+        PSP EXCLUSIVE
+      </div>
+
+      <div class="brand">
+        Pitch Se Prediction<span>™</span>
+      </div>
+
+      <p class="community-text">
+        A dedicated cricket community built around match analysis,
+        pitch reading, team updates and expert perspectives.
+      </p>
+
+      <div class="stats">
+
+        <div class="stat">
+          <div class="stat-number">43K+</div>
+          <div class="stat-label">Community</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Updates</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-number">LIVE</div>
+          <div class="stat-label">Match Focus</div>
+        </div>
+
+      </div>
+
+      <div class="match-label">
+        NEXT MATCH UPDATE
+      </div>
+
+      <!-- TIMER: 10 SECONDS -->
+      <div class="timer">
+
+        <div class="time-box">
+          <div class="time-number">00</div>
+          <div class="time-label">HRS</div>
+        </div>
+
+        <div class="time-box">
+          <div class="time-number">00</div>
+          <div class="time-label">MIN</div>
+        </div>
+
+        <div class="time-box">
+          <div class="time-number" id="seconds">10</div>
+          <div class="time-label">SEC</div>
+        </div>
+
+      </div>
+
+      <button
+        class="join-btn"
+        onclick="joinTelegram()"
+        aria-label="Join PSP on Telegram"
+      >
+        <span class="telegram">➤</span>
+        <span>JOIN NOW</span>
+      </button>
+
+      <div class="one-tap">
+        ONE TAP → TELEGRAM
+      </div>
+
+      <div class="footer">
+        Cricket analysis and informational content only.
+        Please make decisions responsibly and follow applicable laws.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script>
+    const TELEGRAM_LINK = "https://t.me/+1LiMw68B-KUyMDc1";
+
+    // JOIN NOW button → immediate Telegram redirect
+    function joinTelegram() {
+      window.location.href = TELEGRAM_LINK;
+    }
+
+    // 10-second automatic countdown
+    let seconds = 10;
+
+    const secondsElement = document.getElementById("seconds");
+
+    const countdown = setInterval(function () {
+
+      seconds--;
+
+      secondsElement.textContent =
+        seconds < 10 ? "0" + seconds : seconds;
+
+      if (seconds <= 0) {
+
+        clearInterval(countdown);
+
+        // Automatic Telegram redirect after 10 seconds
+        window.location.href = TELEGRAM_LINK;
+      }
+
+    }, 1000);
+  </script>
+
+</body>
 </html>
