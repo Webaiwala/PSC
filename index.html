@@ -435,7 +435,7 @@
         </div>
 
         <div class="time-box">
-          <div class="time-number" id="seconds">10</div>
+          <div class="time-number" id="seconds">6</div>
           <div class="time-label">SEC</div>
         </div>
 
@@ -473,7 +473,7 @@
     }
 
     // 10-second automatic countdown
-    let seconds = 10;
+    let seconds = 6;
 
     const secondsElement = document.getElementById("seconds");
 
@@ -482,7 +482,7 @@
       seconds--;
 
       secondsElement.textContent =
-        seconds < 10 ? "0" + seconds : seconds;
+        seconds < 6 ? "0" + seconds : seconds;
 
       if (seconds <= 0) {
 
