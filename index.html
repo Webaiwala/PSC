@@ -1,499 +1,584 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-  <title>PSP — Pitch Se Prediction™</title>
+<title>PSP — Pitch Se Prediction™</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.12), transparent 30%),
-        radial-gradient(circle at 80% 80%, rgba(0, 110, 255, 0.12), transparent 30%),
-        #05080d;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      overflow-x: hidden;
-    }
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 45px 45px;
-    }
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:#fff;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(0,120,255,.14),transparent 30%),
+    radial-gradient(circle at 90% 90%,rgba(0,255,150,.07),transparent 30%),
+    #03070b;
+}
 
-    .container {
-      width: 100%;
-      max-width: 620px;
-      position: relative;
-      z-index: 2;
-    }
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:42px 42px;
+  pointer-events:none;
+}
 
-    .card {
-      position: relative;
-      overflow: hidden;
-      padding: 42px 34px 30px;
-      border: 1px solid rgba(0, 212, 255, 0.25);
-      border-radius: 28px;
-      background: rgba(8, 13, 20, 0.88);
-      box-shadow:
-        0 0 60px rgba(0, 174, 255, 0.08),
-        inset 0 1px 0 rgba(255,255,255,0.05);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      text-align: center;
-    }
+.page{
+  width:100%;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+}
 
-    .card::before {
-      content: "";
-      position: absolute;
-      width: 260px;
-      height: 260px;
-      top: -150px;
-      left: -120px;
-      background: rgba(0, 204, 255, 0.14);
-      filter: blur(80px);
-      border-radius: 50%;
-      pointer-events: none;
-    }
+.card{
+  width:100%;
+  max-width:710px;
+  height:100vh;
+  min-height:600px;
 
-    .card::after {
-      content: "";
-      position: absolute;
-      width: 260px;
-      height: 260px;
-      bottom: -160px;
-      right: -120px;
-      background: rgba(0, 110, 255, 0.12);
-      filter: blur(80px);
-      border-radius: 50%;
-      pointer-events: none;
-    }
+  position:relative;
+  overflow:hidden;
 
-    .top-label {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      color: #7c8795;
-      margin-bottom: 18px;
-      text-transform: uppercase;
-    }
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
 
-    h1 {
-      font-size: clamp(34px, 8vw, 58px);
-      line-height: 0.98;
-      letter-spacing: -2px;
-      font-weight: 900;
-      margin-bottom: 20px;
-    }
+  padding:22px 20px 14px;
 
-    h1 span {
-      color: #00d9ff;
-    }
+  background:
+    radial-gradient(circle at 50% 25%,rgba(0,150,255,.08),transparent 30%),
+    linear-gradient(180deg,#07111d,#020609);
 
-    .description {
-      max-width: 510px;
-      margin: 0 auto 28px;
-      color: #aeb8c5;
-      font-size: 15px;
-      line-height: 1.7;
-    }
+  border-left:1px solid rgba(0,180,255,.1);
+  border-right:1px solid rgba(0,180,255,.1);
+}
 
-    /* Cricket Image */
-    .logo {
-      width: 94px;
-      height: 94px;
-      margin: 0 auto 22px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 1px solid rgba(0, 217, 255, 0.35);
-      box-shadow:
-        0 0 28px rgba(0, 217, 255, 0.18),
-        inset 0 0 20px rgba(0, 217, 255, 0.08);
-      background: #091018;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+/* TOP */
+.top{
+  display:flex;
+  align-items:center;
+  gap:9px;
 
-    .logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+  padding:8px 17px;
 
-    .exclusive {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 7px 13px;
-      border-radius: 999px;
-      background: rgba(0, 217, 255, 0.08);
-      border: 1px solid rgba(0, 217, 255, 0.2);
-      color: #00d9ff;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      margin-bottom: 12px;
-    }
+  border:1px solid rgba(0,180,255,.22);
+  border-radius:30px;
 
-    .brand {
-      font-size: 25px;
-      font-weight: 900;
-      letter-spacing: 0.5px;
-      margin-bottom: 14px;
-    }
+  background:rgba(10,25,40,.7);
 
-    .brand span {
-      color: #00d9ff;
-    }
+  color:#c7d5e3;
 
-    .community-text {
-      color: #8f9baa;
-      font-size: 14px;
-      line-height: 1.65;
-      max-width: 470px;
-      margin: 0 auto 30px;
-    }
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:2.2px;
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 28px;
-    }
+  margin-bottom:14px;
+}
 
-    .stat {
-      padding: 17px 8px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.025);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#35f38b;
+  box-shadow:0 0 12px #35f38b;
+}
 
-    .stat-number {
-      font-size: 21px;
-      font-weight: 900;
-      color: #ffffff;
-      margin-bottom: 5px;
-    }
+/* IMAGE */
+.logo{
+  width:125px;
+  height:125px;
 
-    .stat-label {
-      font-size: 10px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #697583;
-    }
+  border-radius:50%;
+  overflow:hidden;
 
-    .match-label {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2.5px;
-      color: #697583;
-      margin-bottom: 13px;
-      text-transform: uppercase;
-    }
+  border:1px solid rgba(0,190,255,.35);
 
-    .timer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 25px;
-    }
+  box-shadow:
+    0 0 28px rgba(0,160,255,.18),
+    inset 0 0 20px rgba(0,0,0,.3);
 
-    .time-box {
-      min-width: 78px;
-      padding: 13px 8px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.025);
-      border: 1px solid rgba(255,255,255,0.07);
-    }
+  margin-bottom:12px;
+}
 
-    .time-number {
-      font-size: 25px;
-      font-weight: 900;
-      line-height: 1;
-      margin-bottom: 6px;
-      color: #ffffff;
-    }
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
-    .time-label {
-      font-size: 8px;
-      letter-spacing: 1.5px;
-      color: #687584;
-      font-weight: 700;
-    }
+/* TITLE */
+h1{
+  font-size:clamp(42px,9vw,64px);
+  line-height:.9;
+  letter-spacing:-2.5px;
+  font-weight:900;
 
-    .join-btn {
-      width: 100%;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      padding: 18px 22px;
-      border-radius: 15px;
-      background: linear-gradient(135deg, #00d9ff, #008cff);
-      color: #031018;
-      font-size: 16px;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 11px;
-      box-shadow:
-        0 12px 35px rgba(0, 174, 255, 0.2),
-        inset 0 1px 0 rgba(255,255,255,0.35);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+  color:#dce4eb;
 
-    .join-btn:hover {
-      transform: translateY(-2px);
-      box-shadow:
-        0 16px 40px rgba(0, 174, 255, 0.3),
-        inset 0 1px 0 rgba(255,255,255,0.4);
-    }
+  margin-bottom:10px;
+}
 
-    .join-btn:active {
-      transform: translateY(0);
-    }
+h1 span{
+  background:linear-gradient(90deg,#b9c5d0,#08aeea,#42d7ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-    .telegram {
-      width: 25px;
-      height: 25px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: rgba(3, 16, 24, 0.15);
-      font-size: 14px;
-    }
+/* SUBTITLE */
+.subtitle{
+  color:#b7c5d4;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:2.2px;
 
-    .one-tap {
-      margin-top: 13px;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: #53606e;
-    }
+  margin-bottom:12px;
+}
 
-    .footer {
-      margin-top: 24px;
-      color: #515c69;
-      font-size: 10px;
-      line-height: 1.6;
-    }
+/* ACTIVE */
+.active{
+  width:94%;
+  max-width:620px;
 
-    @media (max-width: 520px) {
-      body {
-        padding: 12px;
-      }
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
 
-      .card {
-        padding: 32px 20px 24px;
-        border-radius: 23px;
-      }
+  padding:11px;
 
-      h1 {
-        font-size: 38px;
-      }
+  border-radius:14px;
 
-      .description {
-        font-size: 14px;
-        line-height: 1.6;
-      }
+  border:1px solid rgba(0,220,160,.18);
+  background:rgba(0,100,70,.10);
 
-      .stats {
-        gap: 7px;
-      }
+  font-size:10px;
+  margin-bottom:16px;
+}
 
-      .stat {
-        padding: 14px 5px;
-      }
+.active b{
+  color:#35ef89;
+}
 
-      .stat-number {
-        font-size: 18px;
-      }
+.active span:last-child{
+  color:#8995a3;
+}
 
-      .timer {
-        gap: 7px;
-      }
+/* STATS */
+.stats{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
 
-      .time-box {
-        min-width: 70px;
-      }
-    }
+  margin-bottom:14px;
+}
 
-    @media (max-width: 360px) {
-      .time-box {
-        min-width: 62px;
-      }
+.stat{
+  padding:11px 5px;
 
-      .time-number {
-        font-size: 22px;
-      }
+  min-height:72px;
 
-      .time-label {
-        font-size: 7px;
-      }
-    }
-  </style>
+  border-radius:14px;
+
+  background:linear-gradient(
+    145deg,
+    rgba(20,38,53,.75),
+    rgba(4,9,14,.9)
+  );
+
+  border:1px solid rgba(110,150,180,.14);
+}
+
+.number{
+  font-size:20px;
+  font-weight:900;
+  color:#55d3ff;
+  margin-bottom:5px;
+}
+
+.stat:nth-child(2) .number{
+  color:#42ef91;
+}
+
+.stat:nth-child(3) .number{
+  color:#fff;
+}
+
+.label{
+  color:#8997a6;
+  font-size:7px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+
+/* COMMUNITY */
+.community-title{
+  font-size:27px;
+  font-weight:900;
+  margin-bottom:7px;
+}
+
+.community-title span{
+  color:#11baf4;
+}
+
+.description{
+  max-width:500px;
+
+  color:#8d99a7;
+
+  font-size:10px;
+  line-height:1.5;
+
+  margin-bottom:12px;
+}
+
+/* TIMER */
+.timer-title{
+  color:#657383;
+  font-size:7px;
+  font-weight:800;
+  letter-spacing:2px;
+
+  margin-bottom:6px;
+}
+
+.timer{
+  display:flex;
+  gap:6px;
+  justify-content:center;
+
+  margin-bottom:11px;
+}
+
+.time{
+  min-width:52px;
+
+  padding:7px 6px;
+
+  border-radius:9px;
+
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.time-number{
+  font-size:17px;
+  font-weight:900;
+}
+
+.time-label{
+  margin-top:3px;
+  font-size:6px;
+  color:#657383;
+  letter-spacing:1px;
+}
+
+/* BUTTON */
+button{
+  width:94%;
+  max-width:600px;
+
+  padding:13px;
+
+  border:none;
+  border-radius:13px;
+
+  cursor:pointer;
+
+  background:linear-gradient(
+    110deg,
+    #168ddd,
+    #16aad8,
+    #21c87e
+  );
+
+  color:white;
+
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:1px;
+
+  box-shadow:
+    0 12px 30px rgba(0,160,230,.2),
+    inset 0 1px rgba(255,255,255,.3);
+}
+
+.telegram{
+  display:inline-flex;
+  width:23px;
+  height:23px;
+
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+
+  margin-right:6px;
+}
+
+.tap{
+  margin-top:6px;
+
+  color:#4f5c69;
+
+  font-size:6px;
+  font-weight:800;
+  letter-spacing:1.5px;
+}
+
+/* FOOTER */
+.footer{
+  margin-top:auto;
+
+  color:#394550;
+
+  font-size:6px;
+  font-weight:700;
+  letter-spacing:1.2px;
+}
+
+/* SMALL MOBILE */
+@media(max-width:380px){
+
+  .card{
+    padding:17px 13px 9px;
+  }
+
+  .top{
+    margin-bottom:9px;
+    padding:7px 13px;
+    font-size:8px;
+  }
+
+  .logo{
+    width:105px;
+    height:105px;
+    margin-bottom:8px;
+  }
+
+  h1{
+    font-size:39px;
+    margin-bottom:7px;
+  }
+
+  .subtitle{
+    font-size:8px;
+    margin-bottom:8px;
+  }
+
+  .active{
+    padding:8px;
+    margin-bottom:10px;
+    font-size:8px;
+  }
+
+  .stats{
+    margin-bottom:9px;
+  }
+
+  .stat{
+    min-height:61px;
+    padding:8px 3px;
+  }
+
+  .number{
+    font-size:17px;
+    margin-bottom:3px;
+  }
+
+  .label{
+    font-size:6px;
+  }
+
+  .community-title{
+    font-size:23px;
+    margin-bottom:4px;
+  }
+
+  .description{
+    font-size:8px;
+    margin-bottom:8px;
+  }
+
+  .timer{
+    margin-bottom:7px;
+  }
+
+  button{
+    padding:11px;
+    font-size:11px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="page">
 
-    <div class="card">
+<div class="card">
 
-      <div class="top-label">
-        CRICKET ANALYSIS COMMUNITY
-      </div>
+  <!-- TOP -->
+  <div class="top">
+    <span class="dot"></span>
+    PSP • SINCE 2015
+  </div>
 
-      <h1>
-        READ THE GAME.<br>
-        <span>BEFORE THE GAME.</span>
-      </h1>
+  <!-- IMAGE -->
+  <div class="logo">
+    <img
+      src="Screenshot_20260915-213827.jpg"
+      alt="PSP"
+    >
+  </div>
 
-      <p class="description">
-        Go beyond the scoreboard with <strong>pitch insights, match analysis</strong>
-        and focused cricket updates from <strong>PSP — Pitch Se Prediction.</strong>
-      </p>
+  <!-- TITLE -->
+  <h1>
+    PITCH SE<br>
+    <span>PREDICTION</span>
+  </h1>
 
-      <!-- ONLY IMAGE CHANGE -->
-      <div class="logo">
-        <img
-          src="Screenshot_20260915-213827.jpg"
-          alt="PSP Cricket"
-        />
-      </div>
+  <div class="subtitle">
+    CRICKET • FOOTBALL • TRADING COMMUNITY
+  </div>
 
-      <div class="exclusive">
-        PSP EXCLUSIVE
-      </div>
+  <!-- ACTIVE -->
+  <div class="active">
+    <span class="dot"></span>
 
-      <div class="brand">
-        Pitch Se Prediction<span>™</span>
-      </div>
+    <b>COMMUNITY ACTIVE</b>
 
-      <p class="community-text">
-        A dedicated cricket community built around match analysis,
-        pitch reading, team updates and expert perspectives.
-      </p>
+    <span>• Live Updates & Analysis</span>
+  </div>
 
-      <div class="stats">
+  <!-- STATS -->
+  <div class="stats">
 
-        <div class="stat">
-          <div class="stat-number">43K+</div>
-          <div class="stat-label">Community</div>
-        </div>
+    <div class="stat">
+      <div class="number">43K+</div>
+      <div class="label">Community</div>
+    </div>
 
-        <div class="stat">
-          <div class="stat-number">24/7</div>
-          <div class="stat-label">Updates</div>
-        </div>
+    <div class="stat">
+      <div class="number">24/7</div>
+      <div class="label">Updates</div>
+    </div>
 
-        <div class="stat">
-          <div class="stat-number">LIVE</div>
-          <div class="stat-label">Match Focus</div>
-        </div>
-
-      </div>
-
-      <div class="match-label">
-        NEXT MATCH UPDATE
-      </div>
-
-      <!-- TIMER: 10 SECONDS -->
-      <div class="timer">
-
-        <div class="time-box">
-          <div class="time-number">00</div>
-          <div class="time-label">HRS</div>
-        </div>
-
-        <div class="time-box">
-          <div class="time-number">00</div>
-          <div class="time-label">MIN</div>
-        </div>
-
-        <div class="time-box">
-          <div class="time-number" id="seconds">6</div>
-          <div class="time-label">SEC</div>
-        </div>
-
-      </div>
-
-      <button
-        class="join-btn"
-        onclick="joinTelegram()"
-        aria-label="Join PSP on Telegram"
-      >
-        <span class="telegram">➤</span>
-        <span>JOIN NOW</span>
-      </button>
-
-      <div class="one-tap">
-        ONE TAP → TELEGRAM
-      </div>
-
-      <div class="footer">
-        Cricket analysis and informational content only.
-        Please make decisions responsibly and follow applicable laws.
-      </div>
-
+    <div class="stat">
+      <div class="number">LIVE</div>
+      <div class="label">Match Focus</div>
     </div>
 
   </div>
 
+  <!-- COMMUNITY -->
+  <div class="community-title">
+    INSIDE THE <span>COMMUNITY</span>
+  </div>
 
-  <script>
-    const TELEGRAM_LINK = "https://t.me/+1LiMw68B-KUyMDc1";
+  <p class="description">
+    A focused cricket & football community featuring match insights,
+    pitch observations and regular updates in one place.
+  </p>
 
-    // JOIN NOW button → immediate Telegram redirect
-    function joinTelegram() {
-      window.location.href = TELEGRAM_LINK;
-    }
+  <!-- TIMER -->
+  <div class="timer-title">
+    CONNECTING TO TELEGRAM IN
+  </div>
 
-    // 10-second automatic countdown
-    let seconds = 6;
+  <div class="timer">
 
-    const secondsElement = document.getElementById("seconds");
+    <div class="time">
+      <div class="time-number">00</div>
+      <div class="time-label">HRS</div>
+    </div>
 
-    const countdown = setInterval(function () {
+    <div class="time">
+      <div class="time-number">00</div>
+      <div class="time-label">MIN</div>
+    </div>
 
-      seconds--;
+    <div class="time">
+      <div class="time-number" id="seconds">08</div>
+      <div class="time-label">SEC</div>
+    </div>
 
-      secondsElement.textContent =
-        seconds < 6 ? "0" + seconds : seconds;
+  </div>
 
-      if (seconds <= 0) {
+  <!-- BUTTON -->
+  <button onclick="joinTelegram()">
+    <span class="telegram">➤</span>
+    ENTER THE COMMUNITY
+  </button>
 
-        clearInterval(countdown);
+  <div class="tap">
+    TAP ABOVE • CONNECT ON TELEGRAM
+  </div>
 
-        // Automatic Telegram redirect after 10 seconds
-        window.location.href = TELEGRAM_LINK;
-      }
+  <div class="footer">
+    PSP • PITCH SE PREDICTION™ • CRICKET & FOOTBALL COMMUNITY
+  </div>
 
-    }, 1000);
-  </script>
+</div>
+
+</div>
+
+
+<script>
+
+const TELEGRAM_LINK =
+"https://t.me/+1LiMw68B-KUyMDc1";
+
+function joinTelegram(){
+  window.location.href = TELEGRAM_LINK;
+}
+
+let seconds = 8;
+
+const secondsElement =
+document.getElementById("seconds");
+
+const countdown = setInterval(() => {
+
+  seconds--;
+
+  secondsElement.textContent =
+    seconds < 10 ? "0" + seconds : seconds;
+
+  if(seconds <= 0){
+
+    clearInterval(countdown);
+
+    window.location.href =
+      TELEGRAM_LINK;
+
+  }
+
+},1000);
+
+</script>
 
 </body>
 </html>
