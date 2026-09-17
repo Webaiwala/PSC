@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no,
+viewport-fit=cover">
 
-<title>CT — Join Telegram Now</title>
+<title>Pitch Se Prediction™ — VIP Channel</title>
 
 <meta name="description"
-content="CT — Join Telegram Now. PSP cricket analysis, pitch insights and match updates.">
+content="Pitch Se Prediction™ — Join VIP Channel for cricket analysis, pitch insights and match updates.">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
 <link rel="preconnect"
 href="https://fonts.gstatic.com"
@@ -36,6 +42,7 @@ rel="stylesheet">
 
 html,
 body{
+
     width:100%;
     height:100%;
     min-height:100%;
@@ -148,7 +155,6 @@ body::before{
     position:fixed;
 
     width:230px;
-
     height:230px;
 
     border-radius:50%;
@@ -162,21 +168,21 @@ body::before{
     pointer-events:none;
 }
 
+
 .orb.one{
 
     background:#00e5ff;
 
     top:-130px;
-
     left:-130px;
 }
+
 
 .orb.two{
 
     background:#713cff;
 
     right:-130px;
-
     bottom:-130px;
 }
 
@@ -487,7 +493,9 @@ body::before{
 @keyframes pulse{
 
     50%{
+
         transform:scale(1.5);
+
         opacity:.55;
     }
 }
@@ -506,7 +514,7 @@ body::before{
 
 
 /* =====================================================
-   MAIN HERO
+   HERO
 ===================================================== */
 
 .hero{
@@ -515,30 +523,220 @@ body::before{
 }
 
 
-.hero-small{
+/* =====================================================
+   JOIN VIP TOP BUTTON
+===================================================== */
 
-    color:#70777d;
+.vip-button{
+
+    position:relative;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    min-height:32px;
+
+    padding:7px 18px;
+
+    border-radius:100px;
+
+    border:1px solid
+    rgba(0,229,255,.65);
+
+    background:
+
+    linear-gradient(
+        100deg,
+        rgba(0,229,255,.16),
+        rgba(0,140,255,.13)
+    );
+
+    color:#fff;
+
+    font-family:Inter,sans-serif;
 
     font-size:8px;
 
-    font-weight:800;
+    font-weight:900;
 
-    letter-spacing:2.5px;
+    letter-spacing:1.3px;
 
-    margin-bottom:4px;
+    cursor:pointer;
 
-    text-transform:uppercase;
+    overflow:hidden;
+
+    transition:.2s ease;
+
+    animation:
+    vipPulse 1.35s infinite;
 }
 
 
+/* =====================================================
+   VIP GLOW + BLINK
+===================================================== */
+
+@keyframes vipPulse{
+
+    0%{
+
+        opacity:1;
+
+        box-shadow:
+
+        0 0 8px
+        rgba(0,229,255,.35),
+
+        0 0 18px
+        rgba(0,229,255,.20),
+
+        inset 0 1px
+        rgba(255,255,255,.08);
+    }
+
+    50%{
+
+        opacity:.72;
+
+        box-shadow:
+
+        0 0 18px
+        rgba(0,229,255,.85),
+
+        0 0 38px
+        rgba(0,229,255,.55),
+
+        0 0 58px
+        rgba(0,140,255,.25),
+
+        inset 0 1px
+        rgba(255,255,255,.18);
+    }
+
+    100%{
+
+        opacity:1;
+
+        box-shadow:
+
+        0 0 8px
+        rgba(0,229,255,.35),
+
+        0 0 18px
+        rgba(0,229,255,.20),
+
+        inset 0 1px
+        rgba(255,255,255,.08);
+    }
+}
+
+
+.vip-button::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-100%;
+
+    top:0;
+
+    width:50%;
+
+    height:100%;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.75),
+        transparent
+    );
+
+    transform:skewX(-20deg);
+
+    animation:
+    vipShine 2.5s infinite;
+}
+
+
+@keyframes vipShine{
+
+    0%{
+
+        left:-100%;
+    }
+
+    45%,
+    100%{
+
+        left:160%;
+    }
+}
+
+
+.vip-icon{
+
+    width:17px;
+
+    height:17px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#00e5ff;
+
+    color:#001217;
+
+    font-size:8px;
+
+    font-weight:900;
+
+    z-index:1;
+
+    box-shadow:
+    0 0 10px
+    rgba(0,229,255,.8);
+}
+
+
+.vip-text{
+
+    z-index:1;
+}
+
+
+.vip-button:active{
+
+    transform:scale(.97);
+}
+
+
+/* =====================================================
+   HERO TITLE
+===================================================== */
+
 .hero-title{
 
+    margin-top:8px;
+
     font-size:
-    clamp(42px,12vw,54px);
+    clamp(38px,11vw,52px);
 
-    line-height:.88;
+    line-height:.9;
 
-    letter-spacing:-3px;
+    letter-spacing:-2.5px;
 
     font-weight:900;
 
@@ -670,16 +868,16 @@ body::before{
 
 
 /* =====================================================
-   IMAGE
+   IMAGE - INCREASED SIZE
 ===================================================== */
 
 .logo{
 
-    width:66px;
+    width:78px;
 
-    height:66px;
+    height:78px;
 
-    margin:0 auto 7px;
+    margin:0 auto 8px;
 
     border-radius:50%;
 
@@ -687,17 +885,17 @@ body::before{
 
     border:
     2px solid
-    rgba(0,229,255,.85);
+    rgba(0,229,255,.9);
 
     background:#06090a;
 
     box-shadow:
 
-    0 0 22px
-    rgba(0,229,255,.25),
+    0 0 24px
+    rgba(0,229,255,.30),
 
-    0 0 42px
-    rgba(0,229,255,.08);
+    0 0 48px
+    rgba(0,229,255,.12);
 }
 
 
@@ -871,81 +1069,7 @@ body::before{
 
 
 /* =====================================================
-   COUNTDOWN
-===================================================== */
-
-.update-label{
-
-    margin-bottom:4px;
-
-    color:#6a7177;
-
-    font-size:6px;
-
-    font-weight:800;
-
-    letter-spacing:1.7px;
-
-    text-transform:uppercase;
-}
-
-
-.timer{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:5px;
-
-    margin-bottom:7px;
-}
-
-
-.time-box{
-
-    min-width:41px;
-
-    padding:4px 5px;
-
-    border-radius:8px;
-
-    background:
-    rgba(0,0,0,.42);
-
-    border:1px solid
-    rgba(255,255,255,.06);
-}
-
-
-.time{
-
-    display:block;
-
-    font-size:13px;
-
-    font-weight:900;
-}
-
-
-.time-label{
-
-    display:block;
-
-    margin-top:1px;
-
-    color:#555c61;
-
-    font-size:5px;
-
-    letter-spacing:.7px;
-}
-
-
-/* =====================================================
-   JOIN BUTTON
+   MAIN JOIN BUTTON
 ===================================================== */
 
 .join-btn{
@@ -1022,17 +1146,21 @@ body::before{
 
     transform:skewX(-20deg);
 
-    animation:shine 3s infinite;
+    animation:
+    shine 3s infinite;
 }
 
 
 @keyframes shine{
 
     0%{
+
         left:-100%;
     }
 
-    45%,100%{
+    45%,
+    100%{
+
         left:160%;
     }
 }
@@ -1081,7 +1209,7 @@ body::before{
 
 
 /* =====================================================
-   BOTTOM CT
+   BOTTOM
 ===================================================== */
 
 .bottom-ct{
@@ -1106,10 +1234,6 @@ body::before{
 }
 
 
-/* =====================================================
-   FOOTER
-===================================================== */
-
 .footer{
 
     margin-top:4px;
@@ -1130,9 +1254,9 @@ body::before{
 
     .page{
 
-        padding:
-        5px 8px;
+        padding:5px 8px;
     }
+
 
     .ct-bar{
 
@@ -1143,6 +1267,7 @@ body::before{
         padding:5px 9px;
     }
 
+
     .ct-badge{
 
         width:21px;
@@ -1152,10 +1277,12 @@ body::before{
         font-size:9px;
     }
 
+
     .ct-text{
 
         font-size:8px;
     }
+
 
     .activity{
 
@@ -1164,6 +1291,7 @@ body::before{
         margin-bottom:5px;
     }
 
+
     .live-bar{
 
         min-height:28px;
@@ -1171,24 +1299,30 @@ body::before{
         margin-bottom:6px;
     }
 
+
     .hero{
 
         margin-bottom:7px;
     }
 
-    .hero-small{
+
+    .vip-button{
+
+        min-height:28px;
 
         font-size:7px;
 
-        margin-bottom:3px;
+        padding:6px 15px;
     }
+
 
     .hero-title{
 
-        font-size:35px;
+        font-size:33px;
 
         letter-spacing:-2px;
     }
+
 
     .hero-sub{
 
@@ -1197,25 +1331,31 @@ body::before{
         font-size:7.5px;
     }
 
+
     .card{
 
         padding:
-        10px 10px 8px;
+        10px
+        10px
+        8px;
     }
+
 
     .logo{
 
-        width:49px;
+        width:62px;
 
-        height:49px;
+        height:62px;
 
         margin-bottom:5px;
     }
+
 
     .main-title{
 
         font-size:20px;
     }
+
 
     .desc{
 
@@ -1224,12 +1364,14 @@ body::before{
         margin-top:3px;
     }
 
+
     .features{
 
         margin:6px auto 5px;
 
         gap:4px;
     }
+
 
     .feature{
 
@@ -1238,47 +1380,36 @@ body::before{
         font-size:6.5px;
     }
 
+
     .stats{
 
         margin:5px auto 6px;
     }
+
 
     .stat{
 
         padding:5px 3px;
     }
 
+
     .number{
 
         font-size:12px;
     }
 
-    .timer{
-
-        margin-bottom:5px;
-    }
-
-    .time-box{
-
-        min-width:38px;
-
-        padding:3px 4px;
-    }
-
-    .time{
-
-        font-size:12px;
-    }
 
     .join-btn{
 
         min-height:40px;
     }
 
+
     .join-text{
 
         font-size:10px;
     }
+
 
     .bottom-ct{
 
@@ -1301,33 +1432,49 @@ body::before{
         padding-right:6px;
     }
 
+
     .hero-title{
 
-        font-size:31px;
+        font-size:30px;
 
         letter-spacing:-1.8px;
     }
+
 
     .hero-sub{
 
         font-size:7px;
     }
 
+
     .card{
 
         padding:
-        9px 8px 7px;
+        9px
+        8px
+        7px;
     }
+
+
+    .logo{
+
+        width:58px;
+
+        height:58px;
+    }
+
 
     .main-title{
 
         font-size:19px;
     }
 
+
     .desc{
 
         font-size:6.7px;
     }
+
 
     .feature{
 
@@ -1343,32 +1490,38 @@ body::before{
    VERY SHORT SCREEN
 ===================================================== */
 
-@media(max-width:600px) and (max-height:600px){
+@media(max-width:600px)
+and (max-height:600px){
 
     .features{
 
         display:none;
     }
 
+
     .hero-title{
 
         font-size:30px;
     }
+
 
     .hero-sub{
 
         margin-top:4px;
     }
 
+
     .card{
 
         padding-top:8px;
     }
 
+
     .stats{
 
         margin:4px auto;
     }
+
 
     .footer{
 
@@ -1384,6 +1537,7 @@ body::before{
 
 <body>
 
+
 <div class="grid"></div>
 
 <div class="orb one"></div>
@@ -1397,19 +1551,22 @@ body::before{
 
 
 <!-- =================================================
-     TOP CT
+     TOP BAR
 ================================================= -->
 
 <div class="ct-bar">
 
     <div class="ct-badge">
+
         CT
+
     </div>
+
 
     <div class="ct-text">
 
-        <span>CT</span>
-        — JOIN TELEGRAM NOW
+        <span>PITCH</span>
+        SE PAHLE
 
     </div>
 
@@ -1420,10 +1577,12 @@ body::before{
      ACTIVITY
 ================================================= -->
 
-<div class="activity show"
-id="activity">
+<div class="activity show" id="activity">
 
-    <span class="bolt">⚡</span>
+    <span class="bolt">
+        ⚡
+    </span>
+
 
     <span
     class="activity-name"
@@ -1433,17 +1592,27 @@ id="activity">
 
     </span>
 
+
     <span class="activity-text">
+
         joined
+
     </span>
+
 
     <span class="activity-vip">
-        PSP VIP
+
+        VIP CHANNEL
+
     </span>
 
+
     <span class="activity-text">
+
         (
+
     </span>
+
 
     <span
     class="activity-city"
@@ -1453,8 +1622,11 @@ id="activity">
 
     </span>
 
+
     <span class="activity-text">
+
         )
+
     </span>
 
 </div>
@@ -1466,14 +1638,18 @@ id="activity">
 
 <div class="live-bar">
 
+
     <div class="live-left">
 
         <span class="live-dot"></span>
 
+
         <span>
 
             <span id="liveMembers">
-                4,823
+
+                4,822
+
             </span>
 
             LIVE MEMBERS
@@ -1489,6 +1665,7 @@ id="activity">
 
     </div>
 
+
 </div>
 
 
@@ -1498,20 +1675,38 @@ id="activity">
 
 <div class="hero">
 
-    <div class="hero-small">
-        PSP — PITCH SE PREDICTION
-    </div>
 
+    <!-- GLOWING / BLINKING VIP BUTTON -->
+
+    <button
+    class="vip-button"
+    onclick="joinVIP()">
+
+        <span class="vip-icon">
+
+            ➤
+
+        </span>
+
+
+        <span class="vip-text">
+
+            JOIN VIP CHANNEL
+
+        </span>
+
+    </button>
+
+
+    <!-- MAIN TITLE -->
 
     <h1 class="hero-title">
 
+        Pitch Se<br>
+
         <span class="ct">
-            CT
+            Prediction™
         </span>
-
-        — JOIN<br>
-
-        TELEGRAM NOW
 
     </h1>
 
@@ -1532,6 +1727,7 @@ id="activity">
 
     </p>
 
+
 </div>
 
 
@@ -1548,7 +1744,7 @@ id="activity">
 
     <img
     src="Screenshot_20260915-213827.jpg"
-    alt="PSP Cricket">
+    alt="Pitch Se Prediction">
 
 </div>
 
@@ -1585,7 +1781,9 @@ id="activity">
 
     <div class="feature">
 
-        <span>⚡</span>
+        <span>
+            ⚡
+        </span>
 
         Real-Time Feeds
 
@@ -1594,7 +1792,9 @@ id="activity">
 
     <div class="feature">
 
-        <span>📊</span>
+        <span>
+            📊
+        </span>
 
         Smart Analytics
 
@@ -1603,7 +1803,9 @@ id="activity">
 
     <div class="feature">
 
-        <span>🎯</span>
+        <span>
+            🎯
+        </span>
 
         Match Insights
 
@@ -1612,7 +1814,9 @@ id="activity">
 
     <div class="feature">
 
-        <span>🛡️</span>
+        <span>
+            🛡️
+        </span>
 
         Free Community
 
@@ -1632,11 +1836,16 @@ id="activity">
     <div class="stat">
 
         <div class="number">
+
             43K+
+
         </div>
 
+
         <div class="label">
-            Community
+
+            COMMUNITY
+
         </div>
 
     </div>
@@ -1645,11 +1854,16 @@ id="activity">
     <div class="stat">
 
         <div class="number">
+
             24/7
+
         </div>
 
+
         <div class="label">
-            Updates
+
+            UPDATES
+
         </div>
 
     </div>
@@ -1658,113 +1872,59 @@ id="activity">
     <div class="stat">
 
         <div class="number">
+
             LIVE
+
         </div>
+
 
         <div class="label">
-            Match Focus
+
+            MATCH FOCUS
+
         </div>
 
     </div>
 
-</div>
-
-
-<!-- =================================================
-     COUNTDOWN
-================================================= -->
-
-<div class="update-label">
-
-    TELEGRAM ACCESS IN
-
-</div>
-
-
-<div class="timer">
-
-
-    <div class="time-box">
-
-        <span
-        class="time"
-        id="hours">
-
-            00
-
-        </span>
-
-        <span class="time-label">
-            HRS
-        </span>
-
-    </div>
-
-
-    <div class="time-box">
-
-        <span
-        class="time"
-        id="minutes">
-
-            00
-
-        </span>
-
-        <span class="time-label">
-            MIN
-        </span>
-
-    </div>
-
-
-    <div class="time-box">
-
-        <span
-        class="time"
-        id="seconds">
-
-            10
-
-        </span>
-
-        <span class="time-label">
-            SEC
-        </span>
-
-    </div>
 
 </div>
 
 
 <!-- =================================================
-     JOIN BUTTON
+     MAIN JOIN BUTTON
 ================================================= -->
 
 <button
 class="join-btn"
-onclick="joinTelegram()"
->
+onclick="joinVIP()">
+
 
     <span class="telegram">
+
         ➤
+
     </span>
+
 
     <span class="join-text">
 
-        JOIN TELEGRAM NOW
+        JOIN VIP CHANNEL
 
     </span>
+
 
 </button>
 
 
-<!-- BOTTOM CT -->
+<!-- BOTTOM -->
 
 <div class="bottom-ct">
 
-    <strong>CT</strong>
-    — ONE TAP → TELEGRAM
+    <strong>
+        CT
+    </strong>
+
+    — ONE TAP → VIP CHANNEL
 
 </div>
 
@@ -1789,14 +1949,14 @@ onclick="joinTelegram()"
 
 
 /* =====================================================
-   TELEGRAM
+   TELEGRAM VIP LINK
 ===================================================== */
 
 const TELEGRAM_LINK =
 "https://t.me/+1LiMw68B-KUyMDc1";
 
 
-function joinTelegram(){
+function joinVIP(){
 
     window.location.href =
     TELEGRAM_LINK;
@@ -1885,8 +2045,10 @@ function changeActivity(){
     const box =
     document.getElementById("activity");
 
+
     const name =
     document.getElementById("activityName");
+
 
     const city =
     document.getElementById("activityCity");
@@ -1898,6 +2060,7 @@ function changeActivity(){
 
 
     setTimeout(function(){
+
 
         const current =
         activities[activityIndex];
@@ -1941,104 +2104,20 @@ setInterval(
 
 
 /* =====================================================
-   LIVE MEMBER COUNTER
+   LIVE MEMBERS
 ===================================================== */
 
-let liveMembers = 4823;
+const liveMembers = 4822;
 
+document.getElementById(
+    "liveMembers"
+).textContent =
+liveMembers.toLocaleString();
 
-function updateMembers(){
-
-    const change =
-    Math.random() > .45
-    ? Math.floor(Math.random()*3)+1
-    : -1;
-
-
-    liveMembers += change;
-
-
-    if(liveMembers < 4750){
-
-        liveMembers = 4750;
-
-    }
-
-
-    if(liveMembers > 4999){
-
-        liveMembers = 4999;
-
-    }
-
-
-    document.getElementById(
-        "liveMembers"
-    ).textContent =
-    liveMembers.toLocaleString();
-
-}
-
-
-setInterval(
-    updateMembers,
-    3500
-);
-
-
-/* =====================================================
-   10 SECOND COUNTDOWN
-===================================================== */
-
-let secondsLeft = 10;
-
-
-function countdown(){
-
-    const seconds =
-    document.getElementById("seconds");
-
-    const hours =
-    document.getElementById("hours");
-
-    const minutes =
-    document.getElementById("minutes");
-
-
-    hours.textContent = "00";
-
-    minutes.textContent = "00";
-
-
-    seconds.textContent =
-    String(secondsLeft)
-    .padStart(2,"0");
-
-
-    if(secondsLeft <= 0){
-
-        window.location.href =
-        TELEGRAM_LINK;
-
-        return;
-
-    }
-
-
-    secondsLeft--;
-
-}
-
-
-countdown();
-
-
-setInterval(
-    countdown,
-    1000
-);
 
 </script>
 
+
 </body>
+
 </html>
