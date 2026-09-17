@@ -12,10 +12,7 @@ maximum-scale=1.0,
 user-scalable=no,
 viewport-fit=cover">
 
-<title>Pitch Se Prediction™ — VIP Channel</title>
-
-<meta name="description"
-content="Pitch Se Prediction™ — Join VIP Channel for cricket analysis, pitch insights and match updates.">
+<title>Pitch Se Prediction™</title>
 
 <link rel="preconnect"
 href="https://fonts.googleapis.com">
@@ -42,10 +39,8 @@ rel="stylesheet">
 
 html,
 body{
-
     width:100%;
     height:100%;
-    min-height:100%;
 }
 
 body{
@@ -74,7 +69,9 @@ body{
 
     --blue:#008cff;
 
-    --green:#00ffa6;
+    --green:#00ff88;
+
+    --green2:#00ffa6;
 
     --muted:#858b91;
 }
@@ -116,6 +113,10 @@ body::before{
 }
 
 
+/* =====================================================
+   GRID
+===================================================== */
+
 .grid{
 
     position:fixed;
@@ -150,6 +151,10 @@ body::before{
 }
 
 
+/* =====================================================
+   ORBS
+===================================================== */
+
 .orb{
 
     position:fixed;
@@ -168,7 +173,6 @@ body::before{
     pointer-events:none;
 }
 
-
 .orb.one{
 
     background:#00e5ff;
@@ -176,7 +180,6 @@ body::before{
     top:-130px;
     left:-130px;
 }
-
 
 .orb.two{
 
@@ -188,7 +191,7 @@ body::before{
 
 
 /* =====================================================
-   FULL MOBILE SCREEN
+   PAGE
 ===================================================== */
 
 .page{
@@ -197,19 +200,17 @@ body::before{
 
     height:100dvh;
 
-    min-height:100dvh;
-
     padding:
-    max(8px, env(safe-area-inset-top))
+    max(8px,env(safe-area-inset-top))
     10px
-    max(8px, env(safe-area-inset-bottom))
+    max(8px,env(safe-area-inset-bottom))
     10px;
 
     display:flex;
 
-    align-items:center;
-
     justify-content:center;
+
+    align-items:center;
 
     overflow:hidden;
 }
@@ -234,14 +235,14 @@ body::before{
 
 
 /* =====================================================
-   TOP CT BAR
+   TOP PITCH PREDICTION BAR
 ===================================================== */
 
 .ct-bar{
 
     width:100%;
 
-    min-height:40px;
+    min-height:42px;
 
     display:flex;
 
@@ -249,41 +250,84 @@ body::before{
 
     justify-content:center;
 
-    gap:7px;
+    gap:8px;
 
     margin-bottom:8px;
 
-    padding:7px 12px;
+    padding:7px 14px;
 
-    border-radius:13px;
+    border-radius:14px;
 
     border:1px solid
-    rgba(0,229,255,.38);
+    rgba(0,255,136,.60);
 
     background:
 
     linear-gradient(
         100deg,
-        rgba(0,229,255,.10),
-        rgba(255,255,255,.025),
-        rgba(0,140,255,.08)
+        rgba(0,255,136,.12),
+        rgba(0,229,255,.06),
+        rgba(0,140,255,.10)
     );
 
     box-shadow:
 
-    0 0 25px
-    rgba(0,229,255,.07),
+    0 0 12px
+    rgba(0,255,136,.22),
+
+    0 0 30px
+    rgba(0,229,255,.10),
 
     inset 0 1px
-    rgba(255,255,255,.06);
+    rgba(255,255,255,.07);
+
+    animation:
+    topGlow 2s infinite ease-in-out;
 }
 
 
+@keyframes topGlow{
+
+    0%,
+    100%{
+
+        box-shadow:
+
+        0 0 10px
+        rgba(0,255,136,.20),
+
+        0 0 24px
+        rgba(0,229,255,.08),
+
+        inset 0 1px
+        rgba(255,255,255,.07);
+    }
+
+    50%{
+
+        box-shadow:
+
+        0 0 18px
+        rgba(0,255,136,.65),
+
+        0 0 38px
+        rgba(0,229,255,.22),
+
+        inset 0 1px
+        rgba(255,255,255,.10);
+    }
+}
+
+
+/* =====================================================
+   TOP ICON
+===================================================== */
+
 .ct-badge{
 
-    width:24px;
+    width:25px;
 
-    height:24px;
+    height:25px;
 
     display:flex;
 
@@ -297,21 +341,43 @@ body::before{
 
     linear-gradient(
         135deg,
-        #00e5ff,
-        #008cff
+        #00ff88,
+        #00e5ff
     );
 
     color:#001217;
 
-    font-size:10px;
+    font-size:8px;
 
     font-weight:900;
 
     box-shadow:
-    0 0 14px
-    rgba(0,229,255,.25);
+
+    0 0 12px
+    rgba(0,255,136,.65);
+
+    animation:
+    badgePulse 1.5s infinite;
 }
 
+
+@keyframes badgePulse{
+
+    50%{
+
+        transform:scale(1.08);
+
+        box-shadow:
+
+        0 0 22px
+        rgba(0,255,136,.95);
+    }
+}
+
+
+/* =====================================================
+   TOP TEXT
+===================================================== */
 
 .ct-text{
 
@@ -319,15 +385,27 @@ body::before{
 
     font-weight:900;
 
-    letter-spacing:.8px;
+    letter-spacing:1px;
 
     color:#fff;
+
+    text-shadow:
+    0 0 8px
+    rgba(255,255,255,.20);
 }
 
 
 .ct-text span{
 
-    color:var(--cyan);
+    color:var(--green);
+
+    text-shadow:
+
+    0 0 7px
+    rgba(0,255,136,.8),
+
+    0 0 18px
+    rgba(0,255,136,.35);
 }
 
 
@@ -416,6 +494,10 @@ body::before{
 .activity-vip{
 
     color:var(--cyan);
+
+    text-shadow:
+    0 0 8px
+    rgba(0,229,255,.45);
 }
 
 
@@ -443,7 +525,7 @@ body::before{
 
     padding:0 11px;
 
-    margin-bottom:9px;
+    margin-bottom:7px;
 
     border-radius:10px;
 
@@ -519,12 +601,18 @@ body::before{
 
 .hero{
 
-    margin-bottom:10px;
+    margin-bottom:8px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
 }
 
 
 /* =====================================================
-   JOIN VIP TOP BUTTON
+   HERO JOIN VIP BUTTON
 ===================================================== */
 
 .vip-button{
@@ -539,21 +627,21 @@ body::before{
 
     gap:7px;
 
-    min-height:32px;
+    min-height:34px;
 
-    padding:7px 18px;
+    padding:7px 20px;
 
     border-radius:100px;
 
     border:1px solid
-    rgba(0,229,255,.65);
+    rgba(0,255,136,.65);
 
     background:
 
     linear-gradient(
         100deg,
-        rgba(0,229,255,.16),
-        rgba(0,140,255,.13)
+        rgba(0,255,136,.13),
+        rgba(0,229,255,.12)
     );
 
     color:#fff;
@@ -570,16 +658,10 @@ body::before{
 
     overflow:hidden;
 
-    transition:.2s ease;
-
     animation:
     vipPulse 1.35s infinite;
 }
 
-
-/* =====================================================
-   VIP GLOW + BLINK
-===================================================== */
 
 @keyframes vipPulse{
 
@@ -590,32 +672,26 @@ body::before{
         box-shadow:
 
         0 0 8px
-        rgba(0,229,255,.35),
+        rgba(0,255,136,.30),
 
         0 0 18px
-        rgba(0,229,255,.20),
-
-        inset 0 1px
-        rgba(255,255,255,.08);
+        rgba(0,229,255,.18);
     }
 
     50%{
 
-        opacity:.72;
+        opacity:.78;
 
         box-shadow:
 
         0 0 18px
-        rgba(0,229,255,.85),
+        rgba(0,255,136,.90),
 
-        0 0 38px
+        0 0 40px
         rgba(0,229,255,.55),
 
-        0 0 58px
-        rgba(0,140,255,.25),
-
-        inset 0 1px
-        rgba(255,255,255,.18);
+        0 0 65px
+        rgba(0,140,255,.22);
     }
 
     100%{
@@ -625,13 +701,10 @@ body::before{
         box-shadow:
 
         0 0 8px
-        rgba(0,229,255,.35),
+        rgba(0,255,136,.30),
 
         0 0 18px
-        rgba(0,229,255,.20),
-
-        inset 0 1px
-        rgba(255,255,255,.08);
+        rgba(0,229,255,.18);
     }
 }
 
@@ -669,13 +742,10 @@ body::before{
 @keyframes vipShine{
 
     0%{
-
         left:-100%;
     }
 
-    45%,
-    100%{
-
+    45%,100%{
         left:160%;
     }
 }
@@ -683,9 +753,9 @@ body::before{
 
 .vip-icon{
 
-    width:17px;
+    width:18px;
 
-    height:17px;
+    height:18px;
 
     display:flex;
 
@@ -695,7 +765,7 @@ body::before{
 
     border-radius:50%;
 
-    background:#00e5ff;
+    background:#00ff88;
 
     color:#001217;
 
@@ -706,20 +776,14 @@ body::before{
     z-index:1;
 
     box-shadow:
-    0 0 10px
-    rgba(0,229,255,.8);
+    0 0 12px
+    rgba(0,255,136,.8);
 }
 
 
 .vip-text{
 
     z-index:1;
-}
-
-
-.vip-button:active{
-
-    transform:scale(.97);
 }
 
 
@@ -732,11 +796,11 @@ body::before{
     margin-top:8px;
 
     font-size:
-    clamp(38px,11vw,52px);
+    clamp(40px,11.5vw,53px);
 
-    line-height:.9;
+    line-height:.88;
 
-    letter-spacing:-2.5px;
+    letter-spacing:-2.8px;
 
     font-weight:900;
 
@@ -764,6 +828,10 @@ body::before{
     background:none;
 
     -webkit-text-fill-color:var(--cyan);
+
+    text-shadow:
+    0 0 12px
+    rgba(0,229,255,.55);
 }
 
 
@@ -797,12 +865,16 @@ body::before{
 
     position:relative;
 
-    width:100%;
+    width:calc(100% - 8px);
+
+    margin:0 auto;
+
+    min-height:445px;
 
     padding:
-    15px
-    12px
-    12px;
+    18px
+    13px
+    14px;
 
     border-radius:23px;
 
@@ -827,6 +899,12 @@ body::before{
     rgba(255,255,255,.08);
 
     backdrop-filter:blur(24px);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:flex-start;
 }
 
 
@@ -868,7 +946,7 @@ body::before{
 
 
 /* =====================================================
-   IMAGE - INCREASED SIZE
+   IMAGE
 ===================================================== */
 
 .logo{
@@ -878,6 +956,8 @@ body::before{
     height:78px;
 
     margin:0 auto 8px;
+
+    flex-shrink:0;
 
     border-radius:50%;
 
@@ -896,6 +976,24 @@ body::before{
 
     0 0 48px
     rgba(0,229,255,.12);
+
+    animation:
+    logoGlow 2.5s infinite ease-in-out;
+}
+
+
+@keyframes logoGlow{
+
+    50%{
+
+        box-shadow:
+
+        0 0 30px
+        rgba(0,229,255,.50),
+
+        0 0 55px
+        rgba(0,255,136,.16);
+    }
 }
 
 
@@ -943,7 +1041,7 @@ body::before{
 
 .desc{
 
-    width:94%;
+    width:96%;
 
     max-width:400px;
 
@@ -972,13 +1070,13 @@ body::before{
 
     width:100%;
 
-    margin:9px auto 7px;
+    margin:10px auto 7px;
 }
 
 
 .feature{
 
-    min-height:32px;
+    min-height:34px;
 
     display:flex;
 
@@ -1027,13 +1125,13 @@ body::before{
 
     width:100%;
 
-    margin:7px auto 8px;
+    margin:7px auto 9px;
 }
 
 
 .stat{
 
-    padding:6px 3px;
+    padding:7px 3px;
 
     border-radius:10px;
 
@@ -1069,6 +1167,106 @@ body::before{
 
 
 /* =====================================================
+   8 SECOND COUNTDOWN
+===================================================== */
+
+.countdown-area{
+
+    margin:2px auto 8px;
+
+    text-align:center;
+}
+
+
+.countdown-title{
+
+    color:#727b80;
+
+    font-size:6px;
+
+    font-weight:800;
+
+    letter-spacing:1.6px;
+
+    text-transform:uppercase;
+
+    margin-bottom:4px;
+}
+
+
+.countdown-title span{
+
+    color:var(--green);
+
+    text-shadow:
+    0 0 8px
+    rgba(0,255,136,.65);
+}
+
+
+.timer{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:5px;
+}
+
+
+.time-box{
+
+    min-width:42px;
+
+    padding:4px 5px;
+
+    border-radius:8px;
+
+    background:
+    rgba(0,0,0,.48);
+
+    border:1px solid
+    rgba(0,255,136,.14);
+
+    box-shadow:
+    inset 0 0 10px
+    rgba(0,255,136,.03);
+}
+
+
+.time{
+
+    display:block;
+
+    font-size:14px;
+
+    font-weight:900;
+
+    color:#fff;
+
+    text-shadow:
+    0 0 8px
+    rgba(255,255,255,.20);
+}
+
+
+.time-label{
+
+    display:block;
+
+    margin-top:1px;
+
+    color:#555c61;
+
+    font-size:5px;
+
+    letter-spacing:.7px;
+}
+
+
+/* =====================================================
    MAIN JOIN BUTTON
 ===================================================== */
 
@@ -1078,7 +1276,7 @@ body::before{
 
     width:100%;
 
-    min-height:46px;
+    min-height:48px;
 
     display:flex;
 
@@ -1110,7 +1308,7 @@ body::before{
     box-shadow:
 
     0 0 28px
-    rgba(0,216,255,.23),
+    rgba(0,216,255,.30),
 
     0 12px 30px
     rgba(0,0,0,.38);
@@ -1118,6 +1316,38 @@ body::before{
     overflow:hidden;
 
     transition:.2s ease;
+
+    margin-top:auto;
+
+    animation:
+    mainButtonGlow 2s infinite ease-in-out;
+}
+
+
+@keyframes mainButtonGlow{
+
+    0%,
+    100%{
+
+        box-shadow:
+
+        0 0 22px
+        rgba(0,216,255,.25),
+
+        0 12px 30px
+        rgba(0,0,0,.38);
+    }
+
+    50%{
+
+        box-shadow:
+
+        0 0 38px
+        rgba(0,216,255,.55),
+
+        0 12px 30px
+        rgba(0,0,0,.42);
+    }
 }
 
 
@@ -1140,7 +1370,7 @@ body::before{
     linear-gradient(
         90deg,
         transparent,
-        rgba(255,255,255,.65),
+        rgba(255,255,255,.72),
         transparent
     );
 
@@ -1154,13 +1384,10 @@ body::before{
 @keyframes shine{
 
     0%{
-
         left:-100%;
     }
 
-    45%,
-    100%{
-
+    45%,100%{
         left:160%;
     }
 }
@@ -1214,7 +1441,7 @@ body::before{
 
 .bottom-ct{
 
-    margin-top:6px;
+    margin-top:7px;
 
     color:#626a70;
 
@@ -1231,12 +1458,16 @@ body::before{
 .bottom-ct strong{
 
     color:var(--cyan);
+
+    text-shadow:
+    0 0 7px
+    rgba(0,229,255,.5);
 }
 
 
 .footer{
 
-    margin-top:4px;
+    margin-top:5px;
 
     color:#42484d;
 
@@ -1254,7 +1485,9 @@ body::before{
 
     .page{
 
-        padding:5px 8px;
+        padding:
+        5px
+        8px;
     }
 
 
@@ -1274,7 +1507,7 @@ body::before{
 
         height:21px;
 
-        font-size:9px;
+        font-size:7px;
     }
 
 
@@ -1296,23 +1529,23 @@ body::before{
 
         min-height:28px;
 
-        margin-bottom:6px;
+        margin-bottom:5px;
     }
 
 
     .hero{
 
-        margin-bottom:7px;
+        margin-bottom:6px;
     }
 
 
     .vip-button{
 
-        min-height:28px;
+        min-height:29px;
 
         font-size:7px;
 
-        padding:6px 15px;
+        padding:6px 16px;
     }
 
 
@@ -1321,6 +1554,8 @@ body::before{
         font-size:33px;
 
         letter-spacing:-2px;
+
+        margin-top:6px;
     }
 
 
@@ -1334,18 +1569,22 @@ body::before{
 
     .card{
 
+        width:calc(100% - 10px);
+
+        min-height:400px;
+
         padding:
+        12px
         10px
-        10px
-        8px;
+        9px;
     }
 
 
     .logo{
 
-        width:62px;
+        width:70px;
 
-        height:62px;
+        height:70px;
 
         margin-bottom:5px;
     }
@@ -1367,7 +1606,7 @@ body::before{
 
     .features{
 
-        margin:6px auto 5px;
+        margin:7px auto 5px;
 
         gap:4px;
     }
@@ -1375,7 +1614,7 @@ body::before{
 
     .feature{
 
-        min-height:27px;
+        min-height:28px;
 
         font-size:6.5px;
     }
@@ -1399,9 +1638,37 @@ body::before{
     }
 
 
+    .countdown-area{
+
+        margin:1px auto 6px;
+    }
+
+
+    .countdown-title{
+
+        font-size:5.5px;
+
+        margin-bottom:3px;
+    }
+
+
+    .time-box{
+
+        min-width:38px;
+
+        padding:3px 4px;
+    }
+
+
+    .time{
+
+        font-size:12px;
+    }
+
+
     .join-btn{
 
-        min-height:40px;
+        min-height:41px;
     }
 
 
@@ -1449,18 +1716,22 @@ body::before{
 
     .card{
 
+        width:calc(100% - 8px);
+
+        min-height:390px;
+
         padding:
-        9px
+        10px
         8px
-        7px;
+        8px;
     }
 
 
     .logo{
 
-        width:58px;
+        width:66px;
 
-        height:58px;
+        height:66px;
     }
 
 
@@ -1483,6 +1754,12 @@ body::before{
         min-height:26px;
     }
 
+
+    .time-box{
+
+        min-width:36px;
+    }
+
 }
 
 
@@ -1501,7 +1778,7 @@ and (max-height:600px){
 
     .hero-title{
 
-        font-size:30px;
+        font-size:29px;
     }
 
 
@@ -1513,6 +1790,8 @@ and (max-height:600px){
 
     .card{
 
+        min-height:350px;
+
         padding-top:8px;
     }
 
@@ -1520,6 +1799,12 @@ and (max-height:600px){
     .stats{
 
         margin:4px auto;
+    }
+
+
+    .countdown-area{
+
+        margin:3px auto 5px;
     }
 
 
@@ -1558,15 +1843,18 @@ and (max-height:600px){
 
     <div class="ct-badge">
 
-        CT
+        PSP
 
     </div>
 
 
     <div class="ct-text">
 
-        <span>PITCH</span>
-        SE PAHLE
+        <span>PITCH PREDICTION</span>
+
+        <span style="color:#fff;">
+            (PSP)
+        </span>
 
     </div>
 
@@ -1588,7 +1876,7 @@ and (max-height:600px){
     class="activity-name"
     id="activityName">
 
-        Rahul Sharma
+        Ankit Verma
 
     </span>
 
@@ -1618,7 +1906,7 @@ and (max-height:600px){
     class="activity-city"
     id="activityCity">
 
-        Delhi
+        Gurugram
 
     </span>
 
@@ -1638,18 +1926,14 @@ and (max-height:600px){
 
 <div class="live-bar">
 
-
     <div class="live-left">
 
         <span class="live-dot"></span>
 
-
         <span>
 
             <span id="liveMembers">
-
                 4,822
-
             </span>
 
             LIVE MEMBERS
@@ -1665,7 +1949,6 @@ and (max-height:600px){
 
     </div>
 
-
 </div>
 
 
@@ -1676,7 +1959,7 @@ and (max-height:600px){
 <div class="hero">
 
 
-    <!-- GLOWING / BLINKING VIP BUTTON -->
+    <!-- TOP JOIN BUTTON -->
 
     <button
     class="vip-button"
@@ -1781,9 +2064,7 @@ and (max-height:600px){
 
     <div class="feature">
 
-        <span>
-            ⚡
-        </span>
+        <span>⚡</span>
 
         Real-Time Feeds
 
@@ -1792,9 +2073,7 @@ and (max-height:600px){
 
     <div class="feature">
 
-        <span>
-            📊
-        </span>
+        <span>📊</span>
 
         Smart Analytics
 
@@ -1803,9 +2082,7 @@ and (max-height:600px){
 
     <div class="feature">
 
-        <span>
-            🎯
-        </span>
+        <span>🎯</span>
 
         Match Insights
 
@@ -1814,9 +2091,7 @@ and (max-height:600px){
 
     <div class="feature">
 
-        <span>
-            🛡️
-        </span>
+        <span>🛡️</span>
 
         Free Community
 
@@ -1891,8 +2166,48 @@ and (max-height:600px){
 
 
 <!-- =================================================
+     8 SECOND AUTO REDIRECT TIMER
+===================================================== -->
+
+<div class="countdown-area">
+
+    <div class="countdown-title">
+
+        REDIRECTING TO
+        <span>VIP CHANNEL</span>
+        IN
+
+    </div>
+
+
+    <div class="timer">
+
+        <div class="time-box">
+
+            <span
+            class="time"
+            id="seconds">
+
+                08
+
+            </span>
+
+            <span class="time-label">
+
+                SEC
+
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =================================================
      MAIN JOIN BUTTON
-================================================= -->
+===================================================== -->
 
 <button
 class="join-btn"
@@ -1916,12 +2231,14 @@ onclick="joinVIP()">
 </button>
 
 
-<!-- BOTTOM -->
+<!-- =================================================
+     BOTTOM
+===================================================== -->
 
 <div class="bottom-ct">
 
     <strong>
-        CT
+        PSP
     </strong>
 
     — ONE TAP → VIP CHANNEL
@@ -1947,7 +2264,6 @@ onclick="joinVIP()">
 
 <script>
 
-
 /* =====================================================
    TELEGRAM VIP LINK
 ===================================================== */
@@ -1955,6 +2271,10 @@ onclick="joinVIP()">
 const TELEGRAM_LINK =
 "https://t.me/+1LiMw68B-KUyMDc1";
 
+
+/* =====================================================
+   MANUAL JOIN
+===================================================== */
 
 function joinVIP(){
 
@@ -1969,6 +2289,8 @@ function joinVIP(){
 ===================================================== */
 
 const activities = [
+
+    ["Ankit Verma","Gurugram"],
 
     ["Rahul Sharma","Delhi"],
 
@@ -1991,8 +2313,6 @@ const activities = [
     ["Abhishek Yadav","Kanpur"],
 
     ["Mohit Sharma","Noida"],
-
-    ["Ankit Verma","Gurugram"],
 
     ["Ravi Kumar","Hyderabad"],
 
@@ -2037,7 +2357,7 @@ let activityIndex = 0;
 
 
 /* =====================================================
-   CHANGE ACTIVITY
+   ACTIVITY CHANGE
 ===================================================== */
 
 function changeActivity(){
@@ -2060,7 +2380,6 @@ function changeActivity(){
 
 
     setTimeout(function(){
-
 
         const current =
         activities[activityIndex];
@@ -2104,15 +2423,69 @@ setInterval(
 
 
 /* =====================================================
-   LIVE MEMBERS
+   LIVE MEMBER DISPLAY
 ===================================================== */
 
 const liveMembers = 4822;
+
 
 document.getElementById(
     "liveMembers"
 ).textContent =
 liveMembers.toLocaleString();
+
+
+/* =====================================================
+   8 SECOND AUTO REDIRECT
+===================================================== */
+
+let secondsLeft = 8;
+
+const countdownElement =
+document.getElementById("seconds");
+
+
+function countdown(){
+
+    countdownElement.textContent =
+    String(secondsLeft).padStart(2,"0");
+
+
+    if(secondsLeft <= 0){
+
+        window.location.href =
+        TELEGRAM_LINK;
+
+        return;
+    }
+
+
+    secondsLeft--;
+
+}
+
+
+/* Start immediately */
+
+countdown();
+
+
+/* Continue every second */
+
+const countdownInterval =
+setInterval(function(){
+
+    countdown();
+
+    if(secondsLeft < 0){
+
+        clearInterval(
+            countdownInterval
+        );
+
+    }
+
+},1000);
 
 
 </script>
